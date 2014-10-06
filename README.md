@@ -243,7 +243,7 @@ Visit http://w3rep.sourceforge.net/ for detailed .w3g format documentation.
 
 (The MIT License)
 
-Copyright (c) 2014 HydraOrc &lt;hydra0@bigmir.net&gt;
+Copyright (c) 2014 HydraOrc
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
