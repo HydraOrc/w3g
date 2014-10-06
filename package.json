@@ -1,4 +1,4 @@
-{	
+{
 	"name": "w3g",
 	"version": "1.0.0",
 	"description": "Node.js copy of w3g-julas - Warcraft III Replay Parser",
@@ -23,7 +23,7 @@
 		},
 		{
 			"name": "Juliusz Gonera"
-		},
+		}
 	],
 	"main": "./lib/w3g_julas",
 	"repository": {
