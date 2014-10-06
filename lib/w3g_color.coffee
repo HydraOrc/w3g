@@ -1,0 +1,15 @@
+module.exports = [
+	'red'
+	'blue'
+	'teal'
+	'purple'
+	'yellow'
+	'orange'
+	'green'
+	'pink'
+	'gray'
+	'light-blue'
+	'dark-green'
+	'brown'
+	'observer'
+]

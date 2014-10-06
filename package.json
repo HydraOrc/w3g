@@ -1,0 +1,45 @@
+{	
+	"name": "w3g",
+	"version": "1.0.0",
+	"description": "Node.js copy of w3g-julas - Warcraft III Replay Parser",
+	"keywords": [
+		"w3g",
+		"julas",
+		"replay",
+		"warcraft",
+		"warcraft iii",
+		"warcraft 3",
+		"hydra",
+		"parser"
+	],
+	"author": {
+		"name": "Ruslan Hydra",
+		"email": "hydra0@bigmir.net"
+	},
+	"contributors": [
+		{
+			"name": "Ruslan Hydra",
+			"email": "hydra0@bigmir.net"
+		},
+		{
+			"name": "Juliusz Gonera"
+		},
+	],
+	"main": "./lib/w3g_julas",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/HydraOrc/w3g"
+	},
+	"devDependencies": {
+		"coffee-script": "1.7.1"
+	},
+	"dependencies": {
+		"phpjs": "1.3.2"
+	},
+	"license": "MIT",
+	"readmeFilename": "README.md",
+	"bugs": {
+		"url": "https://github.com/HydraOrc/w3g/issues"
+	},
+	"homepage": "https://github.com/HydraOrc/w3g"
+}
