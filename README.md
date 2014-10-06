@@ -73,20 +73,19 @@ If your replay file is valid, you should get something like this (example is shr
             "initiator": true,
             "name": "HydraOrc",
             "actions_details": {
-                "Right click": 0,
-                "Select / deselect": 0,
-                "Select group hotkey": 0,
-                "Assign group hotkey": 0,
-                "Use ability": 0,
-                "Basic commands": 0,
-                "Build / train": 0,
-                "Enter build submenu": 0,
-                "Enter hero's abilities submenu": 0,
-                "Select subgroup": 0,
-                "Give item / drop item": 0,
-                "Remove unit from queue": 0,
-                "ESC pressed": 0,
-                "undefined": null
+				"Right click": 2172,
+                "Select / deselect": 949,
+                "Select group hotkey": 548,
+                "Assign group hotkey": 101,
+                "Use ability": 226,
+                "Basic commands": 368,
+                "Build / train": 111,
+                "Enter build submenu": 19,
+                "Enter hero's abilities submenu": 13,
+                "Select subgroup": 171,
+                "Give item / drop item": 1,
+                "Remove unit from queue": 1,
+                "ESC pressed": 0
             },
             "hotkeys": {
                 "0": {

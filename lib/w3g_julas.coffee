@@ -2,11 +2,11 @@ fs = require 'fs'
 php = require 'phpjs'
 
 convert = require './w3g_julas_convert'
-action = require './w3g_action'
+actions = require './w3g_action'
 speed = require './w3g_speed'
 visibility = require './w3g_visibility'
-color = require './w3g_color'
-observer = require './w3g_observer'
+colors = require './w3g_color'
+observers = require './w3g_observer'
 
 unpack = require '../utils/unpack'
 inflate = require '../utils/inflate'
@@ -152,8 +152,8 @@ module.exports = class Replay
 			upgrades:
 				order: {}
 		
-		for key, act of action
-			@players[player_id].actions_details[act] = 0
+		for key, action of actions
+			@players[player_id].actions_details[action] = 0
 		
 		i = 0
 		while @data[i] != "\x00"
@@ -220,7 +220,7 @@ module.exports = class Replay
 		else if(php.ord(temp[1]) & 8)
 			@game.visibility = visibility[3]
 		
-		@game.observers = observer[((php.ord(temp[1]) & 16) == true) + 2*((php.ord(temp[1]) & 32) == true)]
+		@game.observers = observers[((php.ord(temp[1]) & 16) == true) + 2*((php.ord(temp[1]) & 32) == true)]
 		@game.teams_together = convert.bool(php.ord(temp[1]) & 64)
 		
 		@game.lock_teams = convert.bool(php.ord(temp[2]))
@@ -230,7 +230,7 @@ module.exports = class Replay
 		@game.random_races = convert.bool(php.ord(temp[3]) & 4)
 		
 		if php.ord(temp[3]) & 64
-			@game.observers = observer[4]
+			@game.observers = observers[4]
 		
 		temp = php.substr temp, 13 # 5 unknown bytes + checksum
 		
@@ -275,7 +275,7 @@ module.exports = class Replay
 				@data = php.substr @data, 7
 			
 			if temp.slot_status == 2 # do not add empty slots
-				temp.color = color[temp.color]
+				temp.color = colors[temp.color]
 				temp.race = convert.race temp.race
 				temp.ai_strength = convert.ai temp.ai_strength
 				
@@ -444,7 +444,7 @@ module.exports = class Replay
 						value = convert.itemid itemid
 						
 						if !value
-							@players[player_id].actions_details[action.ability]++
+							@players[player_id].actions_details[actions.ability]++
 							
 							# handling Destroyers
 							if(php.ord(actionblock[n + 2]) == 0x33 && php.ord(actionblock[n + 3]) == 0x02)
@@ -461,7 +461,7 @@ module.exports = class Replay
 								@players[player_id].units[name]--
 						
 						else
-							@players[player_id].actions_details[action.buildtrain]++
+							@players[player_id].actions_details[actions.buildtrain]++
 							
 							if !@players[player_id].race_detected
 								if race_detected = convert.race itemid
@@ -580,9 +580,9 @@ module.exports = class Replay
 							n++ # ability flag
 						
 						if(php.ord(actionblock[n + 2]) <= 0x19 && php.ord(actionblock[n + 3]) == 0x00) # basic commands
-							@players[player_id].actions_details[action.basic]++
+							@players[player_id].actions_details[actions.basic]++
 						else
-							@players[player_id].actions_details[action.ability]++
+							@players[player_id].actions_details[actions.ability]++
 						
 						value = php.strrev(php.substr(actionblock, n + 2, 4))
 						if value = convert.buildingid value
@@ -605,11 +605,11 @@ module.exports = class Replay
 							n++ # ability flag
 						
 						if(php.ord(actionblock[n + 2]) == 0x03 && php.ord(actionblock[n + 3]) == 0x00) # rightclick
-							@players[player_id].actions_details[action.rightclick]++
+							@players[player_id].actions_details[actions.rightclick]++
 						else if(php.ord(actionblock[n + 2]) <= 0x19 && php.ord(actionblock[n + 3]) == 0x00) # basic commands
-							@players[player_id].actions_details[action.basic]++
+							@players[player_id].actions_details[actions.basic]++
 						else
-							@players[player_id].actions_details[action.ability]++
+							@players[player_id].actions_details[actions.ability]++
 						
 						if @header.major_v >= 7
 							n += 30
@@ -622,7 +622,7 @@ module.exports = class Replay
 						if @header.major_v >= 13
 							n++ # ability flag
 						
-						@players[player_id].actions_details[action.item]++
+						@players[player_id].actions_details[actions.item]++
 						if @header.major_v >= 7
 							n += 38
 						else
@@ -635,11 +635,11 @@ module.exports = class Replay
 							n++ # ability flag
 						
 						if(php.ord(actionblock[n + 2]) == 0x03 && php.ord(actionblock[n + 3]) == 0x00) # rightclick
-							@players[player_id].actions_details[action.rightclick]++
+							@players[player_id].actions_details[actions.rightclick]++
 						else if(php.ord(actionblock[n + 2]) <= 0x19 && php.ord(actionblock[n + 3]) == 0x00) # basic commands
-							@players[player_id].actions_details[action.basic]++
+							@players[player_id].actions_details[actions.basic]++
 						else
-							@players[player_id].actions_details[action.ability]++
+							@players[player_id].actions_details[actions.ability]++
 						
 						if @header.major_v >= 7
 							n += 43
@@ -651,7 +651,7 @@ module.exports = class Replay
 						temp = unpack('Cmode/vnum', php.substr(actionblock, n + 1, 3))
 						if temp.mode == 0x02 || !was_deselect
 							@players[player_id].actions++
-							@players[player_id].actions_details[action.select]++
+							@players[player_id].actions_details[actions.select]++
 						
 						was_deselect = temp.mode == 0x02
 						
@@ -661,7 +661,7 @@ module.exports = class Replay
 					# Assign Group Hotkey
 					when 0x17
 						@players[player_id].actions++
-						@players[player_id].actions_details[action.assignhotkey]++
+						@players[player_id].actions_details[actions.assignhotkey]++
 						temp = unpack('Cgroup/vnum', php.substr(actionblock, n + 1, 3))
 						
 						@players[player_id].hotkeys[temp.group] = @players[player_id].hotkeys[temp.group] || {}
@@ -675,7 +675,7 @@ module.exports = class Replay
 					# Select Group Hotkey
 					when 0x18
 						@players[player_id].actions++
-						@players[player_id].actions_details[action.selecthotkey]++
+						@players[player_id].actions_details[actions.selecthotkey]++
 						
 						@players[player_id].hotkeys[php.ord(actionblock[n + 1])].used = @players[player_id].hotkeys[php.ord(actionblock[n + 1])].used || 0
 						
@@ -690,7 +690,7 @@ module.exports = class Replay
 						if(@header.build_v >= 6040 || @header.major_v > 14)
 							if was_subgroup # can't think of anything better (check action 0x1A)
 								@players[player_id].actions++
-								@players[player_id].actions_details[action.subgroup]++
+								@players[player_id].actions_details[actions.subgroup]++
 								
 								# I don't have any better idea what to do when somebody binds buildings
 								# of more than one type to a single key and uses them to train units
@@ -701,7 +701,7 @@ module.exports = class Replay
 						else
 							if(php.ord(actionblock[n+1]) != 0 && php.ord(actionblock[n+1]) != 0xFF && !was_subupdate)
 								@players[player_id].actions++
-								@players[player_id].actions_details[action.subgroup]++
+								@players[player_id].actions_details[actions.subgroup]++
 							
 							was_subupdate = (php.ord(actionblock[n+1]) == 0xFF)
 							n += 2
@@ -746,7 +746,7 @@ module.exports = class Replay
 							n += 9
 						else
 							@players[player_id].actions++
-							@players[player_id].actions_details[action.removeunit]++
+							@players[player_id].actions_details[actions.removeunit]++
 							value = convert.itemid(php.strrev(php.substr(actionblock, n+2, 4)))
 							name = php.substr(value, 2)
 							switch value[0]
@@ -813,7 +813,7 @@ module.exports = class Replay
 					when 0x61						
 						@players[player_id].actions++
 						
-						@players[player_id].actions_details[action.esc]++
+						@players[player_id].actions_details[actions.esc]++
 						++n
 	
 					# Scenario Trigger
@@ -827,7 +827,7 @@ module.exports = class Replay
 					when 0x65
 						@players[player_id].actions++
 						
-						@players[player_id].actions_details[action.heromenu]++
+						@players[player_id].actions_details[actions.heromenu]++
 						++n
 	
 					# Enter select hero skill submenu
@@ -835,9 +835,9 @@ module.exports = class Replay
 					when 0x66
 						@players[player_id].actions++
 						if @header.major_v >= 7
-							@players[player_id].actions_details[action.heromenu]++
+							@players[player_id].actions_details[actions.heromenu]++
 						else
-							@players[player_id].actions_details[action.buildmenu]++
+							@players[player_id].actions_details[actions.buildmenu]++
 						
 						n += 1
 	
@@ -846,7 +846,7 @@ module.exports = class Replay
 					when 0x67
 						if @header.major_v >= 7
 							@players[player_id].actions++
-							@players[player_id].actions_details[action.buildmenu]++
+							@players[player_id].actions_details[actions.buildmenu]++
 							n += 1
 						else
 							n += 13
