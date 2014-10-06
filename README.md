@@ -3,7 +3,7 @@ w3g
 
 Node.js copy of w3g-julas - Warcraft III Replay Parser. Originally written on PHP by Juliusz Gonera (Julas) - http://w3rep.sourceforge.net/
 
-Feel free to message me or create a pull request if you have some ideas.
+Feel free to message me on github or create a pull request if you have some ideas.
 
 Introduction
 ===
