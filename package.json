@@ -1,6 +1,6 @@
 {
 	"name": "w3g",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "Node.js copy of w3g-julas - Warcraft III Replay Parser",
 	"keywords": [
 		"w3g",
